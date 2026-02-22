@@ -8,7 +8,11 @@ html, body {
   margin: 0;
 }
 body{
-    background-image: linear-gradient(to left, rgb(183, 88, 156),rgb(90, 139, 170));
+    background-image:url("hi.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
 }
 main{
     text-align: center;
@@ -17,7 +21,7 @@ main{
 }
 #one{
     background-color: rgba(0, 0, 0, 0.328);
-    border-color:aliceblue;
+    border-color:2px black;
     font-size: 35px;
     width: 35px;
     height: 35px;
@@ -36,7 +40,7 @@ footer{
     margin-bottom: 60px;
 }
 button:hover{
-    background-image: linear-gradient(to right, rgb(67, 127, 177), rgb(180, 76, 152));
+    background-color: cornflowerblue;
     color: white;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
@@ -73,8 +77,8 @@ div,#score{
         white-space: nowrap;
 }
 #resetScore:hover{
-    background-image: linear-gradient(to left, rgb(67, 127, 177), rgb(180, 76, 152));
-    color: rgba(21, 1, 1, 0.938);
+    background-color: cornflowerblue;
+    color:white;
     font-size: 14px;
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
