@@ -1,57 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <audio id="winSound" src="sounds/win.mp3"></audio>
-    <audio id="bgMusic" src="sounds/bgm.mp3" loop></audio>
-    <link rel="stylesheet" href="style.css">
+  <title>Tic Tac Toe</title>
+  <link rel="stylesheet" href="style.css">
+
+  <audio id="bgMusic" src="sounds/bgm.mp3" loop></audio>
+  <audio id="winSound" src="sounds/win.mp3"></audio>
 </head>
 <body>
-  <button id="muteBtn">🔊</button>
-<header>
-     <h1>
-        <b>❌ WELCOME TO MY GAME ⭕</b>
-     </h1>
-</header>
+
+<button id="muteBtn">🔊</button>
+
+<h1>❌ WELCOME TO MY GAME ⭕</h1>
+
 <div id="highscore">
-        Highest Score: <b id="highScoreValue">0</b>
+  Highest Score: <b id="highScoreValue">0</b>
 </div>
-<div class="app">
-      
-</div>
+
 <div class="score">
   <span>X: <b>0</b></span>
   <span>O: <b>0</b></span>
 </div>
+
 <main>
   <div id="ox">
-  <input class="cell" readonly>
-  <input class="cell" readonly>
-  <input class="cell" readonly><br>
-  <input class="cell" readonly>
-  <input class="cell" readonly>
-  <input class="cell" readonly><br>
-  <input class="cell" readonly>
-  <input class="cell" readonly>
-  <input class="cell" readonly>
-</div>
-<div id="aiThinking" style="display:none;">
-    🤖 AI is thinking...
-</div>
+    <input class="cell" readonly>
+    <input class="cell" readonly>
+    <input class="cell" readonly><br>
+
+    <input class="cell" readonly>
+    <input class="cell" readonly>
+    <input class="cell" readonly><br>
+
+    <input class="cell" readonly>
+    <input class="cell" readonly>
+    <input class="cell" readonly>
+  </div>
+
+  <div id="aiThinking" style="display:none;">🤖 AI is thinking...</div>
 </main>
 
 <footer>
-    <button id="button"> RESET</button> 
-    <button id="resetScore">RESET SCORE</button>
-    <button id="modeBtn">PLAY VS AI</button>
-    <button id="easyBtn">EASY</button>
-    <button id="hardBtn">HARD</button>
-    <button id="impossibleBtn">IMPOSSIBLE</button>
-    <button id="logoutBtn">Logout</button>
+  <button id="button">RESET</button>
+  <button id="resetScore">RESET SCORE</button>
+  <button id="modeBtn">PLAY VS AI</button>
+  <button id="easyBtn">EASY</button>
+  <button id="hardBtn">HARD</button>
+  <button id="impossibleBtn">IMPOSSIBLE</button>
+  <button id="logoutBtn">LOGOUT</button>
 </footer>
 
+<script src="one.js"></script>
 </body>
-     <script type="module" src="one.js"></script>
 </html>

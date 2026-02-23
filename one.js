@@ -1,46 +1,6 @@
-/***********************
+/************************
   ELEMENTS
 ************************/
-import { auth } from "./firebase.js";
-import { onAuthStateChanged, signOut }
-from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-
-onAuthStateChanged(auth, user => {
-  if (!user) {
-    window.location.href = "login.html";
-  }
-});
-/***********************
-  SOUND SYSTEM
-************************/
-const bgMusic = document.getElementById("bgMusic");
-const muteBtn = document.getElementById("muteBtn");
-
-let muted = false;
-let musicStarted = false;
-
-// initial volume
-bgMusic.volume = 0.9;
-
-// browser autoplay fix (start music on first click)
-document.body.addEventListener(
-  "click",
-  () => {
-    if (!musicStarted) {
-      bgMusic.play().catch(() => {});
-      musicStarted = true;
-    }
-  },
-  { once: true }
-);
-
-// mute / unmute
-muteBtn.addEventListener("click", () => {
-  muted = !muted;
-  bgMusic.muted = muted;
-  muteBtn.textContent = muted ? "🔇" : "🔊";
-});
-
 const cells = document.querySelectorAll(".cell");
 const resetBtn = document.getElementById("button");
 const resetScoreBtn = document.getElementById("resetScore");
@@ -55,17 +15,50 @@ const scoreOEl = document.querySelector(".score span:nth-child(2) b");
 const highScoreEl = document.getElementById("highScoreValue");
 const aiThinkingEl = document.getElementById("aiThinking");
 
-/***********************
+const bgMusic = document.getElementById("bgMusic");
+const muteBtn = document.getElementById("muteBtn");
+
+/************************
+  SOUND SYSTEM
+************************/
+let musicStarted = false;
+let muted = localStorage.getItem("muted") === "true";
+
+bgMusic.volume = 0.7;
+bgMusic.muted = muted;
+muteBtn.textContent = muted ? "🔇" : "🔊";
+
+// autoplay fix
+document.body.addEventListener(
+  "click",
+  () => {
+    if (!musicStarted) {
+      bgMusic.play().catch(() => {});
+      musicStarted = true;
+    }
+  },
+  { once: true }
+);
+
+// mute toggle
+muteBtn.onclick = () => {
+  muted = !muted;
+  bgMusic.muted = muted;
+  localStorage.setItem("muted", muted);
+  muteBtn.textContent = muted ? "🔇" : "🔊";
+};
+
+/************************
   GAME STATE
 ************************/
 let board = Array(9).fill("");
 let currentPlayer = "X";
 let gameOver = false;
-let gameMode = "AI"; // AI or PVP
+let gameMode = "AI";
 let difficulty = "EASY";
 
-/***********************
-  SCORES (localStorage)
+/************************
+  SCORES
 ************************/
 let xScore = Number(localStorage.getItem("xScore")) || 0;
 let oScore = Number(localStorage.getItem("oScore")) || 0;
@@ -75,7 +68,7 @@ scoreXEl.textContent = xScore;
 scoreOEl.textContent = oScore;
 highScoreEl.textContent = highScore;
 
-/***********************
+/************************
   WIN PATTERNS
 ************************/
 const winPatterns = [
@@ -84,7 +77,7 @@ const winPatterns = [
   [0,4,8],[2,4,6]
 ];
 
-/***********************
+/************************
   CELL CLICK
 ************************/
 cells.forEach((cell, index) => {
@@ -106,7 +99,7 @@ cells.forEach((cell, index) => {
   });
 });
 
-/***********************
+/************************
   MAKE MOVE
 ************************/
 function makeMove(index, player) {
@@ -116,31 +109,24 @@ function makeMove(index, player) {
   checkWinner();
 }
 
-/***********************
-  AI CONTROLLER
+/************************
+  AI
 ************************/
 function aiMove() {
   if (difficulty === "EASY") easyAI();
   else if (difficulty === "HARD") hardAI();
   else impossibleAI();
-
   currentPlayer = "X";
 }
 
-/***********************
-  EASY AI
-************************/
 function easyAI() {
   const empty = board
-    .map((v,i) => v === "" ? i : null)
+    .map((v, i) => (v === "" ? i : null))
     .filter(v => v !== null);
 
   makeMove(random(empty), "O");
 }
 
-/***********************
-  HARD AI
-************************/
 function hardAI() {
   for (let [a,b,c] of winPatterns)
     if (board[a]==="O" && board[b]==="O" && board[c]==="")
@@ -153,50 +139,47 @@ function hardAI() {
   easyAI();
 }
 
-/***********************
-  IMPOSSIBLE AI (MINIMAX)
-************************/
 function impossibleAI() {
   let bestScore = -Infinity;
   let move;
 
-  board.forEach((v,i)=>{
-    if(v===""){
-      board[i]="O";
-      let score = minimax(board,false);
-      board[i]="";
-      if(score > bestScore){
+  board.forEach((v,i) => {
+    if (v === "") {
+      board[i] = "O";
+      let score = minimax(board, false);
+      board[i] = "";
+      if (score > bestScore) {
         bestScore = score;
         move = i;
       }
     }
   });
 
-  makeMove(move,"O");
+  makeMove(move, "O");
 }
 
-function minimax(newBoard, isMax) {
-  let result = getResult(newBoard);
+function minimax(b, isMax) {
+  let result = getResult(b);
   if (result !== null) {
     return result === "O" ? 10 : result === "X" ? -10 : 0;
   }
 
   let best = isMax ? -Infinity : Infinity;
 
-  newBoard.forEach((v,i)=>{
-    if(v===""){
-      newBoard[i] = isMax ? "O" : "X";
-      let score = minimax(newBoard,!isMax);
-      newBoard[i] = "";
-      best = isMax ? Math.max(best,score) : Math.min(best,score);
+  b.forEach((v,i) => {
+    if (v === "") {
+      b[i] = isMax ? "O" : "X";
+      let score = minimax(b, !isMax);
+      b[i] = "";
+      best = isMax ? Math.max(best, score) : Math.min(best, score);
     }
   });
 
   return best;
 }
 
-/***********************
-  CHECK WINNER
+/************************
+  WIN CHECK
 ************************/
 function checkWinner() {
   for (let [a,b,c] of winPatterns) {
@@ -216,30 +199,30 @@ function checkWinner() {
 
 function getResult(b) {
   for (let [a,b1,c] of winPatterns)
-    if (b[a] && b[a]===b[b1] && b[a]===b[c])
+    if (b[a] && b[a] === b[b1] && b[a] === b[c])
       return b[a];
-  if (b.every(v=>v)) return "draw";
+  if (b.every(v => v)) return "draw";
   return null;
 }
 
-/***********************
-  SCORE
+/************************
+  SCORE UPDATE
 ************************/
 function updateScore(winner) {
-  if (winner === "X") xScore++;
-  else oScore++;
+  winner === "X" ? xScore++ : oScore++;
 
   scoreXEl.textContent = xScore;
   scoreOEl.textContent = oScore;
 
-  localStorage.setItem("xScore",xScore);
-  localStorage.setItem("oScore",oScore);
+  localStorage.setItem("xScore", xScore);
+  localStorage.setItem("oScore", oScore);
 
   highScore = Math.max(highScore, xScore, oScore);
   highScoreEl.textContent = highScore;
+  localStorage.setItem("highScore", highScore);
 }
 
-/***********************
+/************************
   BUTTONS
 ************************/
 resetBtn.onclick = resetBoard;
@@ -249,6 +232,7 @@ resetScoreBtn.onclick = () => {
   localStorage.clear();
   scoreXEl.textContent = 0;
   scoreOEl.textContent = 0;
+  highScoreEl.textContent = 0;
   resetBoard();
 };
 
@@ -262,60 +246,35 @@ easyBtn.onclick = () => { difficulty="EASY"; resetBoard(); };
 hardBtn.onclick = () => { difficulty="HARD"; resetBoard(); };
 impossibleBtn.onclick = () => { difficulty="IMPOSSIBLE"; resetBoard(); };
 
-muteBtn.onclick = () => {
-  soundEnabled = !soundEnabled;
-  localStorage.setItem("sound", soundEnabled ? "on" : "off");
-
-  soundEnabled ? bgm.play() : bgm.pause();
-};
-muteBtn.addEventListener("click", () => {
-  soundEnabled = !soundEnabled;
-
-  if (soundEnabled) {
-    bgm.play().catch(() => {});
-  } else {
-    bgm.pause();
-  }
-});
-/***********************
+/************************
   RESET
 ************************/
 function resetBoard() {
   board.fill("");
-  cells.forEach(c=>{
-    c.value="";
-    c.disabled=false;
+  cells.forEach(c => {
+    c.value = "";
+    c.disabled = false;
   });
-  currentPlayer="X";
-  gameOver=false;
+  currentPlayer = "X";
+  gameOver = false;
   hideThinking();
 }
 
-/***********************
+/************************
   AI UI
 ************************/
 function showThinking() {
-  aiThinkingEl.style.display="block";
-  cells.forEach(c=>c.disabled=true);
+  aiThinkingEl.style.display = "block";
+  cells.forEach(c => c.disabled = true);
 }
 
 function hideThinking() {
-  aiThinkingEl.style.display="none";
-  cells.forEach((c,i)=>{
-    if(board[i]==="") c.disabled=false;
+  aiThinkingEl.style.display = "none";
+  cells.forEach((c,i) => {
+    if (board[i] === "") c.disabled = false;
   });
 }
 
-function random(arr){
-  return arr[Math.floor(Math.random()*arr.length)];
+function random(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
 }
-function playSound(sound) {
-  if (!sound) return;
-  sound.currentTime = 0;
-  sound.play().catch(() => {});
-}
-document.getElementById("logoutBtn").onclick = () => {
-  signOut(auth).then(() => {
-    window.location.href = "login.html";
-  });
-};
