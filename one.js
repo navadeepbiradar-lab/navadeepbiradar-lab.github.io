@@ -1,6 +1,37 @@
 /***********************
   ELEMENTS
 ************************/
+/***********************
+  SOUND SYSTEM
+************************/
+const bgMusic = document.getElementById("bgMusic");
+const muteBtn = document.getElementById("muteBtn");
+
+let muted = false;
+let musicStarted = false;
+
+// initial volume
+bgMusic.volume = 0.9;
+
+// browser autoplay fix (start music on first click)
+document.body.addEventListener(
+  "click",
+  () => {
+    if (!musicStarted) {
+      bgMusic.play().catch(() => {});
+      musicStarted = true;
+    }
+  },
+  { once: true }
+);
+
+// mute / unmute
+muteBtn.addEventListener("click", () => {
+  muted = !muted;
+  bgMusic.muted = muted;
+  muteBtn.textContent = muted ? "🔇" : "🔊";
+});
+
 const cells = document.querySelectorAll(".cell");
 const resetBtn = document.getElementById("button");
 const resetScoreBtn = document.getElementById("resetScore");
@@ -222,6 +253,21 @@ easyBtn.onclick = () => { difficulty="EASY"; resetBoard(); };
 hardBtn.onclick = () => { difficulty="HARD"; resetBoard(); };
 impossibleBtn.onclick = () => { difficulty="IMPOSSIBLE"; resetBoard(); };
 
+muteBtn.onclick = () => {
+  soundEnabled = !soundEnabled;
+  localStorage.setItem("sound", soundEnabled ? "on" : "off");
+
+  soundEnabled ? bgm.play() : bgm.pause();
+};
+muteBtn.addEventListener("click", () => {
+  soundEnabled = !soundEnabled;
+
+  if (soundEnabled) {
+    bgm.play().catch(() => {});
+  } else {
+    bgm.pause();
+  }
+});
 /***********************
   RESET
 ************************/
@@ -253,4 +299,9 @@ function hideThinking() {
 
 function random(arr){
   return arr[Math.floor(Math.random()*arr.length)];
+}
+function playSound(sound) {
+  if (!sound) return;
+  sound.currentTime = 0;
+  sound.play().catch(() => {});
 }
