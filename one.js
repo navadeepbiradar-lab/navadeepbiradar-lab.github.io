@@ -1,6 +1,15 @@
 /***********************
   ELEMENTS
 ************************/
+import { auth } from "./firebase.js";
+import { onAuthStateChanged, signOut }
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+onAuthStateChanged(auth, user => {
+  if (!user) {
+    window.location.href = "login.html";
+  }
+});
 /***********************
   SOUND SYSTEM
 ************************/
@@ -305,3 +314,8 @@ function playSound(sound) {
   sound.currentTime = 0;
   sound.play().catch(() => {});
 }
+document.getElementById("logoutBtn").onclick = () => {
+  signOut(auth).then(() => {
+    window.location.href = "login.html";
+  });
+};
