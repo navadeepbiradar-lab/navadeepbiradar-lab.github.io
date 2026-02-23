@@ -3,23 +3,23 @@ text-align: center;
 text-shadow: 2px 6px black;
 color: white;
 }
-html, body {
- height: 100%;
+body {
   margin: 0;
-}
-body{
-    background-image:url("hi.jpg");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    background-attachment: fixed;
+  font-family: "Poppins", sans-serif;
+  background: 
+    linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)),
+    url("hi.jpg"); 
+  background-size: cover;
+  min-height: fit-content;
+  background-repeat: no-repeat;
+  color: #fff;
 }
 main{
     text-align: center;
     margin: 25px;
     padding: 8px;
 }
-#one{
+.cell{
     background-color: rgba(0, 0, 0, 0.328);
     border-color:2px black;
     font-size: 35px;
@@ -27,7 +27,7 @@ main{
     height: 35px;
     text-align: center;
     color:crimson;
-    margin: 3px;
+    margin: 4px;
     break-after: column;
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
 }
@@ -39,35 +39,27 @@ footer{
     text-align: center;
     margin-bottom: 60px;
 }
-button:hover{
-    background-color: rgba(21, 26, 34, 0.372);
-    color: white;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+button {
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+  border: none;
+  width: 100px;
+  padding: 10px 16px;
+  border-radius: 20px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 1px;
+  transition: 0.2s;
 }
-button{
-     border-radius: 10px 10px;
-     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-     transition-timing-function: calc(0.2s);
-     padding: 8px;
-     width: 70px;
-     background-color: rgba(0, 0, 0, 0.052);
-     color: white;
-     margin-bottom: 12px;
-     border: 6px white;
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
 }
-#score{
-    color: black;
-    margin: 10px;
-    text-align: center;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    font-size:24px;
-    text-shadow: 2px 2px white;
-}
-#xScore{
-    color: black;
-}
-#oScore{
-    color: black;
+.score {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 1.1rem;
 }
 div,#score{
     margin-left: 262px;
@@ -77,7 +69,7 @@ div,#score{
 #resetScore{
         background-color: rgba(0, 0, 0, 0.071);
         color: white;
-        width: 110px;
+        width: 120px;
         white-space: nowrap;
 }
 #resetScore:hover{
@@ -100,7 +92,7 @@ div,#score{
 }
 #modeBtn{
     white-space: nowrap;
-    width: 94px;
+    width: 120px;
     font-size: 13px;
 }
 .win {
@@ -117,7 +109,7 @@ div,#score{
   }
 }
 #impossibleBtn{
-    width: 95px;
+    width: 105px;
 }
 #aiThinking {
   text-align: center;
@@ -137,5 +129,47 @@ div,#score{
     white-space: nowrap;
 }
 #modeBtn{
-    width: 95px;
+    width: 120px;
+}
+.app {
+  max-width: 420px;
+  margin: 40px auto;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.45);
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+  backdrop-filter: blur(6px);
+}
+@media (max-width: 480px) {
+  .box {
+    width: 80px;
+    height: 80px;
+    font-size: 2.5rem;
+  }
+}
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 20px auto;
+}
+
+.box {
+  width: 105px;
+  height: 100px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 12px;
+  font-size: 3rem;
+  font-weight: bold;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.box:hover {
+  transform: scale(1.05);
+  background: rgba(255,255,255,0.25);
 }
