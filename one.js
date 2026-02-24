@@ -228,11 +228,10 @@ function updateScore(winner) {
 resetBtn.onclick = resetBoard;
 
 resetScoreBtn.onclick = () => {
-  xScore = oScore = highScore = 0;
+  xScore = oScore = 0;
   localStorage.clear();
   scoreXEl.textContent = 0;
   scoreOEl.textContent = 0;
-  highScoreEl.textContent = 0;
   resetBoard();
 };
 
