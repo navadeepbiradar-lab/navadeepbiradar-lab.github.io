@@ -2,6 +2,8 @@ h1{
 text-align: center;
 text-shadow: 2px 6px black;
 color: white;
+white-space: nowrap;
+font-size: 30px;
 }
 body {
   margin: 0;
@@ -132,9 +134,9 @@ div,#score{
     width: 120px;
 }
 .app {
-  max-width: 420px;
+  max-width: 489px;
   margin: 30px auto;
-  padding: 18px;
+  padding: 1px;
   background: rgba(0, 0, 0, 0.45);
   border-radius: 20px;
   box-shadow: 0 20px 40px rgba(0,0,0,0.6);
@@ -144,7 +146,7 @@ div,#score{
   .box {
     width: 80px;
     height: 80px;
-    font-size: 2.5rem;
+    font-size: 1.5rem;
   }
 }
 .board {
