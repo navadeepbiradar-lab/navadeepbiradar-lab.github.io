@@ -42,8 +42,8 @@ footer{
     margin-bottom: 60px;
 }
 button {
-  background: linear-gradient(135deg, #00c6ff, #0072ff);
-  border: none;
+  background: transparent;
+  border: 0.5px solid white;
   width: 90px;
   padding: 10px 16px;
   border-radius: 20px;
@@ -51,7 +51,7 @@ button {
   font-weight: 600;
   cursor: pointer;
   margin-bottom: 1px;
-  transition: 0.2s;
+  transition: 0.1s;
 }
 button:hover {
   transform: translateY(-2px);
@@ -94,7 +94,7 @@ div,#score{
 }
 #modeBtn{
     white-space: nowrap;
-    width: 120px;
+    width: 140px;
     font-size: 13px;
 }
 .win {
